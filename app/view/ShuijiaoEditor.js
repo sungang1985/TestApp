@@ -38,7 +38,7 @@ Ext.define('TestApp.view.ShuijiaoEditor', {
 					}
 				}, {
 					xtype: 'numberfield',
-					name: 'volume',
+					name: 'value',
 					minValue: 0,
 					maxValue: 1000,
 					label: '时长'
@@ -70,7 +70,17 @@ Ext.define('TestApp.view.ShuijiaoEditor', {
 				text: '保存',
 				ui: 'action',
 				handler: function() {
+					var shuijiaoEditorFormPanel = Ext.getCmp('shuijiaoEditorFormPanel');
+					var growupLog = shuijiaoEditorFormPanel.getRecord();
+					var values = shuijiaoEditorFormPanel.getValues();
+					growupLog.set('date', Ext.Date.format(values.date, "Y-m-d H:i"));
+					growupLog.set('value',values.value);
+					growupLog.set('remark',values.remark);
 
+					growupLogStore.add(growupLog);
+					growupLogStore.sync();
+
+					Ext.getCmp('shuijiao').pop();
 				}
 			}]
 		}]

@@ -26,6 +26,17 @@ Ext.define('TestApp.view.ShuijiaoList', {
 					var shuijiaoEditor = Ext
 						.create('TestApp.view.ShuijiaoEditor');
 					Ext.getCmp('shuijiao').push(shuijiaoEditor);
+
+					var now = new Date();
+					var id = (now.getTime()).toString() + (getRandomInt(0, 100)).toString();
+					var growupLog = Ext.create('TestApp.model.GrowupLog', {
+						'id': id,
+						'type': '1',
+						'date': new Date(),
+						'value': 0,
+						'remark': ''
+					});
+					Ext.getCmp('shuijiaoEditorFormPanel').setRecord(growupLog);
 				}
 			}]
 		}, {
@@ -58,110 +69,11 @@ Ext.define('TestApp.view.ShuijiaoList', {
 		this.page = 1;
 		this.pageSize = 10;
 
-		var growupLog = {
-			"id": 11,
-			"type": "1",
-			"date": "2015-03-01 20:22:00",
-			"value": "1",
-			"remark": "睡的不错"
-		};
-		localStorageManager.setGrowupLog('11', growupLog);
-
-		growupLog = {
-			"id": 12,
-			"type": "1",
-			"date": "2015-03-02 20:22:00",
-			"value": "1",
-			"remark": "睡的不错"
-		};
-		localStorageManager.setGrowupLog('12', growupLog);
-
 		Ext.getCmp('shuijiaoList').getScrollable().getScroller().on('scrollend', this.onScrollerEnd);
-		this.loadDate();
+		this.loadData();
 	},
-	loadDate: function() {
-		var data = [{
-			"id": 1,
-			"type": "1",
-			"date": "2015-02-23 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 2,
-			"type": "1",
-			"date": "2015-02-23 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 3,
-			"type": "1",
-			"date": "2015-02-23 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 4,
-			"type": "1",
-			"date": "2015-02-23 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 5,
-			"type": "1",
-			"date": "2015-02-23 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 6,
-			"type": "1",
-			"date": "2015-02-22 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 7,
-			"type": "1",
-			"date": "2015-02-22 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 8,
-			"type": "1",
-			"date": "2015-02-22 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 9,
-			"type": "1",
-			"date": "2015-02-22 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}, {
-			"id": 10,
-			"type": "1",
-			"date": "2015-02-22 20:22:00",
-			"value": "1",
-			"remark": "睡的很香"
-		}];
-		growupLogStore.setData(data);
+	loadData: function() {
 		Ext.getCmp('shuijiaoList').setStore(growupLogStore);
-
 	},
-	onScrollerEnd: function(scroller, offsets) {
-		var growupLog = localStorageManager.getGrowupLog('11');
-		var m = Ext.create('TestApp.model.GrowupLog');
-		m.set('id', growupLog.id);
-		m.set('type', growupLog.type);
-		m.set('date', growupLog.date);
-		m.set('value', growupLog.value);
-		m.set('remark', growupLog.remark);
-		Ext.getCmp('shuijiaoList').getStore().insert(0, m);
-
-		growupLog = localStorageManager.getGrowupLog('12');
-		m = Ext.create('TestApp.model.GrowupLog');
-		m.set('id', growupLog.id);
-		m.set('type', growupLog.type);
-		m.set('date', growupLog.date);
-		m.set('value', growupLog.value);
-		m.set('remark', growupLog.remark);
-		Ext.getCmp('shuijiaoList').getStore().insert(0, m);
-	}
+	onScrollerEnd: function(scroller, offsets) {}
 });
